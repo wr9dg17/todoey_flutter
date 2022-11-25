@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+import 'package:todoey_flutter/repositories/tasks.dart';
 
 class AddTask extends StatefulWidget {
-  final Function onAddTask;
-
-  const AddTask({Key? key, required this.onAddTask}) : super(key: key);
+  const AddTask({Key? key}) : super(key: key);
 
   @override
   State<AddTask> createState() => _AddTaskState();
@@ -42,12 +43,13 @@ class _AddTaskState extends State<AddTask> {
               onChanged: (value) {
                 taskTitle = value;
               },
+              autofocus: true,
               textAlign: TextAlign.center,
             ),
             const SizedBox(height: 15.0),
             ElevatedButton(
               onPressed: () {
-                widget.onAddTask(taskTitle);
+                context.read<Tasks>().addTask(name: taskTitle);
                 taskTitleController.clear();
                 Navigator.pop(context);
               },

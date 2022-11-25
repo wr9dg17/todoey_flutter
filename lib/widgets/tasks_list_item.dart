@@ -1,15 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+import 'package:todoey_flutter/repositories/tasks.dart';
 
 class TasksListItem extends StatelessWidget {
+  final int index;
   final String title;
   final bool isChecked;
-  final Function onToggle;
 
   const TasksListItem({
     Key? key,
+    required this.index,
     required this.title,
     required this.isChecked,
-    required this.onToggle
   }) : super(key: key);
 
   @override
@@ -24,7 +27,7 @@ class TasksListItem extends StatelessWidget {
       trailing: Checkbox(
         activeColor: Colors.lightBlueAccent,
         value: isChecked,
-        onChanged: (value) => onToggle()
+        onChanged: (value) => context.read<Tasks>().toggle(index: index),
       ),
     );
   }
